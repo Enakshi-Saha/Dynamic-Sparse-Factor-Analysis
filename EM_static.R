@@ -363,3 +363,30 @@ EM_static = function(Y, phi_w, phi_beta = 0.95,
        Gamma = Gamma,
        w = w)
 }
+
+####################################################################
+
+# One-step-ahead Forecast
+
+# Input:
+#   result: EM_static output, a list with simulated Beta, Sigma, w, phi_beta
+#   phi_w: AR coefficient of latent factors
+
+# Output: One-step-ahead forecast, a p-vector Y_{T+1}
+
+#__________________________________________________________________
+
+forecast_SEM = function(result,phi_w){
+  
+  Beta = result$Beta
+  w = result$w
+  
+  T = ncol(Beta)
+  w_current = w[[T]]
+  
+  w_new = phi_w*w_current
+  Y_new = Beta %*% w_new
+  
+  Y_new
+  
+}

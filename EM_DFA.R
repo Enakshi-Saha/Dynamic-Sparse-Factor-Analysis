@@ -530,3 +530,36 @@ EM_DSS = function(Y, phi_w, phi_beta = 0.95,
        Gamma0 = Gamma0,
        w = w)
 }
+
+####################################################################
+
+# One-step-ahead Forecast
+
+# Input:
+#   result: EM_DFA output, a list with simulated Beta, Sigma, w, phi_beta
+#   lambda0,lambda1: spike & slab variances
+#   Theta: marginal importance weight
+#   phi_beta: AR coefficient for Beta
+#   phi_w: AR coefficient of latent factors
+
+# Output: One-step-ahead forecast, a p-vector Y_{T+1}
+
+#__________________________________________________________________
+
+forecast_DEM = function(result,lambda1,lambda0,Theta,phi_beta = 0.95,phi_w){
+  
+  Beta = result$Beta
+  w = result$w
+  T = length(Beta)
+  Beta_current = Beta[[T]]
+  w_current = w[[T]]
+  p = nrow(Beta_current)
+  
+  gamma_new = theta_beta(Beta_current,lambda1,lambda0,phi_beta,Theta)
+  Beta_new = gamma_new*phi_beta*Beta_current
+  w_new = phi_w*w_current
+  Y_new = Beta_new %*% w_new
+  
+  Y_new
+  
+}
