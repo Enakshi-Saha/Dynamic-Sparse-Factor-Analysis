@@ -1,1 +1,2 @@
 # Dynamic-Sparse-Factor-Analysis
+This is an implementation of the Dynamic Sparse Factor Analysis method in R. This Bayesian factor analysis tool can be used to discover latent factor structures influencing a high dimensional time series data. The number of latent factors and their respective influences are allowed to vary over time. This repository contains both an EM and an MCMC implementation of the method.
